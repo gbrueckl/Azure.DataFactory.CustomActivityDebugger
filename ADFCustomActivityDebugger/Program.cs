@@ -21,7 +21,7 @@ namespace Azure.DataFactory
     public class Program
     {
         // change all these variables according to your ADF Custom Activity
-        private static string ADFWorkingDirectory = @"d:\Work\SourceControl\GitHub\Azure.DataFactory.CustomActivityDebugger\MyADFProject\"; // directory of the ADF solution
+        private static string ADFWorkingDirectory = @"..\..\..\MyADFProject\"; // directory of the ADF solution, can be relative or absolute path
         private static string ADFPipelineName = "DataDownloaderSamplePipeline"; // name of the pipeline which contains the Activity to test
         private static string ADFActivityName = "DownloadData"; // name of the Activity to test
         private static string ADFConfigurationFile = null; // e.g. "MyConfig.json", optional (must reside in the ADFWorkingDirectory!)
