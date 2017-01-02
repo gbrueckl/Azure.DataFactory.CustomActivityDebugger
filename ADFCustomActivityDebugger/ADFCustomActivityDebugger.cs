@@ -258,7 +258,16 @@ namespace Azure.DataFactory
 
                                 if (find != null) // token was found
                                     if (find.Path == jProp.Path) // found token has the same path as the original token
+                                    {
                                         jProp.Value = result["value"];
+                                        break;
+                                    }
+                            }
+
+                            // the jProp.Value must be updated with the value from the config file - otherwise we throw an error
+                            if (jProp.Value.ToString() == "<config>")
+                            {
+                                throw new KeyNotFoundException("No Config-Setting could be found for \"" + objectName + "\" and \"name\": \"" + jProp.Path + "\" (or any matching wildcard)");
                             }
                         }
                     }
