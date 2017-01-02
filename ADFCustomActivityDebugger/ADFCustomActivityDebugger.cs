@@ -236,6 +236,7 @@ namespace Azure.DataFactory
         public void MapConfigElements(ref JObject jsonObject)
         {
             JProperty jProp;
+            JToken find;
             string objectName = jsonObject["name"].ToString();
 
             foreach (JToken jToken in jsonObject.Descendants())
@@ -248,13 +249,17 @@ namespace Azure.DataFactory
                     {
                         if (jProp.Value.ToString() == "<config>")
                         {
-                            //objectName
-                            // "$." + jProp.Path
-                            //$[FTP_Responsys]        [?(@.name=="$.properties.typeProperties.host")]
+                            // get all Config-settings for the current file
+                            foreach (JToken result in ConfigFile.SelectTokens(string.Format("$.{0}.[*]", objectName)))
+                            {
+                                // try to select the token specified in the config in the file
+                                // this logic is necessary as the config might contain JSONPath wildcards
+                                find = jProp.Root.SelectToken(result["name"].ToString());
 
-                            JToken result = ConfigFile.SelectToken(string.Format("$.{0}.[?(@.name == '$.{1}')]", objectName, jProp.Path));
-
-                            jProp.Value = result["value"];
+                                if (find != null) // token was found
+                                    if (find.Path == jProp.Path) // found token has the same path as the original token
+                                        jProp.Value = result["value"];
+                            }
                         }
                     }
                 }
