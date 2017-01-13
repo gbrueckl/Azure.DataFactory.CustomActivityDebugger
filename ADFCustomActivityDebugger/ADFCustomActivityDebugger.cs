@@ -236,7 +236,7 @@ namespace Azure.DataFactory
         public void MapConfigElements(ref JObject jsonObject)
         {
             JProperty jProp;
-            JToken find;
+            List<JToken> find;
             string objectName = jsonObject["name"].ToString();
 
             foreach (JToken jToken in jsonObject.Descendants())
@@ -254,17 +254,16 @@ namespace Azure.DataFactory
                             {
                                 // try to select the token specified in the config in the file
                                 // this logic is necessary as the config might contain JSONPath wildcards
-                                find = jProp.Root.SelectToken(result["name"].ToString());
+                                find = jProp.Root.SelectTokens(result["name"].ToString()).ToList();
 
-                                if (find != null) // token was found
-                                    if (find.Path == jProp.Path) // found token has the same path as the original token
+                                if (find.Count > 0) // token was found
+                                    if (find.Select(x => x.Path).Contains(jProp.Path)) // found token has the same path as the original token
                                     {
                                         jProp.Value = result["value"];
                                         break;
                                     }
                             }
 
-                            // the jProp.Value must be updated with the value from the config file - otherwise we throw an error
                             if (jProp.Value.ToString() == "<config>")
                             {
                                 throw new KeyNotFoundException("No Config-Setting could be found for \"" + objectName + "\" and \"name\": \"" + jProp.Path + "\" (or any matching wildcard)");
