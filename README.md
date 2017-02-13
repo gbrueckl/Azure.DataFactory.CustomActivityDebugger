@@ -1,3 +1,10 @@
+## This code was merged into the GitHub Project [Azure.DataFactory.LocalEnvironment](https://github.com/gbrueckl/Azure.DataFactory.LocalEnvironment).
+## The new Repository contains all functionalities of this CustomActivityDebugger project and additional features like the export as Azure Resource Manager template and also better usability.
+## The Azure.DataFactory.CustomActivityDebugger repository will not be developed any further - instead please refer to the  [Azure.DataFactory.LocalEnvironment](https://github.com/gbrueckl/Azure.DataFactory.LocalEnvironment) repository for the latest update on debugging Custom .Net Activities for Azure Data Factory!
+
+
+
+
 # Azure.DataFactory.CustomActivityDebugger
 A C# Project which allows you to locally debug Azure Data Factory Custom .Net Activities
 
