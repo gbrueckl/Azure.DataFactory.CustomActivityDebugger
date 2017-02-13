@@ -24,7 +24,11 @@ namespace Azure.DataFactory
         private static string ADFWorkingDirectory = @"..\..\..\MyADFProject\"; // directory of the ADF solution, can be relative or absolute path
         private static string ADFPipelineName = "DataDownloaderSamplePipeline"; // name of the pipeline which contains the Activity to test
         private static string ADFActivityName = "DownloadData"; // name of the Activity to test
-        private static string ADFConfigurationFile = null; // e.g. "MyConfig.json", optional (must reside in the ADFWorkingDirectory!)
+        
+        // e.g. "MyConfig.json", optional (must reside in the ADFWorkingDirectory!) and parameters to be 
+        // substituted must be specified as "<config>" in the json definition files, e.g. "accessKey": "<config>"
+        private static string ADFConfigurationFile = null; 
+        
         private static DateTime SliceStart = new DateTime(2016, 10, 07); // set Slice-StartDate
         private static DateTime SliceEnd = new DateTime(2016, 10, 07); // set Slice-EndDate
         private static IDotNetActivity executeable = new DataDownloaderActivity(); // the IDotNetActivity that should be debugged
